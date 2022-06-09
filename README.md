@@ -14,7 +14,7 @@ Data-Augmentation-Dedicated resource added to Moibus
 * app.js
 
 # Resource Structure
-![resource structure](https://github.com/AISL-Sejong/AI4IoT/tree/dataAug/Mobius-dataAug/img/resource_structure.png?raw=true)
+![resource structure](Mobius-dataAug/img/resource_structure.png)
 
 # CREATE Request Example
 ![create resource](https://github.com/AISL-Sejong/AI4IoT/tree/dataAug/Mobius-dataAug/img/Create_resource.png?raw=true)
