@@ -18,3 +18,11 @@ Data-Augmentation-Dedicated resource added to Moibus
 
 # CREATE Request Example
 ![create resource](Mobius-dataAug/img/Create_resource.png)
+
+# Documents
+* Data_Augmentation_desc.pdf
+Description about specific changes made on Mobius
+
+
+* Data_Augmentation_test.pdf
+A simple scenario with python test scripts
