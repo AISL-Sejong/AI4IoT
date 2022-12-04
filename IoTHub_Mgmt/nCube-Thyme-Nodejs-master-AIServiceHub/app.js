@@ -12,11 +12,11 @@
  * Created by ryeubi on 2015-08-31.
  */
 
-const { Console } = require('console');
-var Onem2mClient = require('./onem2m_client');
-
-var thyme_tas = require('./thyme_tas');
-var net = require('net');
+ const { Console } = require('console');
+ var Onem2mClient = require('./onem2m_client');
+ 
+ var thyme_tas = require('./thyme_tas');
+ var net = require('net');
 
 var options = {
     protocol: conf.useprotocol,
@@ -48,7 +48,8 @@ function create_cnt_all(count, callback) {
         if(conf.cnt.hasOwnProperty(count)) {
             var parent = conf.cnt[count].parent;
             var rn = conf.cnt[count].name;
-            onem2m_client.create_cnt(parent, rn, count, function (rsc, res_body, count) {
+            var lbl = conf.cnt[count].lbl; //modify lbl
+            onem2m_client.create_cnt(parent, rn, lbl, count, function (rsc, res_body, count) { //modify lbl
                 if (rsc == 5106 || rsc == 2001 || rsc == 4105) {
                     create_cnt_all(++count, function (status, count) {
                         callback(status, count);
@@ -219,85 +220,6 @@ function setup_resources(_status) {
     }
 }
 
-onem2m_client.on('notification', function (source_uri, cinObj) {
-
-    console.log(source_uri, cinObj);
-
-    var path_arr = source_uri.split('/')
-    var event_cnt_name = path_arr[path_arr.length-2];
-    var content = cinObj.con;
-
-    /* Received Classifier event */
-    if(event_cnt_name === 'classifier') { 
-        // send to tas
-        if (socket_arr[path_arr[path_arr.length-2]] != null) {
-            socket_arr[path_arr[path_arr.length-2]].write(JSON.stringify(content) + '<EOF>');
-        }
-    }
-    /* Received Desplay1 event */
-    if(event_cnt_name === 'display1') {
-        // send to tas
-        if (socket_arr[path_arr[path_arr.length-2]] != null) {
-            socket_arr[path_arr[path_arr.length-2]].write(JSON.stringify(content) + '<EOF>');
-        }
-    }
-    /* Received Desplay2 event */
-    if(event_cnt_name === 'display2') {
-        // send to tas
-        if (socket_arr[path_arr[path_arr.length-2]] != null) {
-            socket_arr[path_arr[path_arr.length-2]].write(JSON.stringify(content) + '<EOF>');
-        }
-    }
-    /* Received report event */
-    if(event_cnt_name === 'report') {
-        // send to tas
-        if (socket_arr[path_arr[path_arr.length-2]] != null) {
-            socket_arr[path_arr[path_arr.length-2]].write(JSON.stringify(content) + '<EOF>');
-        }
-    }
-    /* Received target event */
-    if(event_cnt_name === 'target') {
-        // send to tas
-        if (socket_arr[path_arr[path_arr.length-2]] != null) {
-            socket_arr[path_arr[path_arr.length-2]].write(JSON.stringify(content) + '<EOF>');
-        }
-    }
-    /* Received water_class event */
-    if(event_cnt_name === 'water_class') {
-        // send to tas
-        if (socket_arr[path_arr[path_arr.length-2]] != null) {
-            socket_arr[path_arr[path_arr.length-2]].write(JSON.stringify(content) + '<EOF>');
-        }
-    }
-    /* Received coke_class event */
-    if(event_cnt_name === 'coke_class') {
-        // send to tas
-        if (socket_arr[path_arr[path_arr.length-2]] != null) {
-            socket_arr[path_arr[path_arr.length-2]].write(JSON.stringify(content) + '<EOF>');
-        }
-    }
-    /* Received label event */
-    if(event_cnt_name === 'label') { 
-        // send to tas
-        if (socket_arr[path_arr[path_arr.length-2]] != null) {
-            socket_arr[path_arr[path_arr.length-2]].write(JSON.stringify(content) + '<EOF>');
-        }
-    }
-    /* Received accuracy event */
-    if(event_cnt_name === 'accuracy') { 
-        // send to tas
-        if (socket_arr[path_arr[path_arr.length-2]] != null) {
-            socket_arr[path_arr[path_arr.length-2]].write(JSON.stringify(content) + '<EOF>');
-        }
-    }
-    /* Received image event */
-    if(event_cnt_name === 'image') { 
-        // send to tas
-        if (socket_arr[path_arr[path_arr.length-2]] != null) {
-            socket_arr[path_arr[path_arr.length-2]].write(JSON.stringify(content) + '<EOF>');
-        }
-    }
-});
 
 var t_count = 0;
 function timer_upload_action(cnt_idx, content, period) {
@@ -331,20 +253,22 @@ function timer_upload(period, cnt_idx) { //modify
     //setTimeout(timer_upload_action, period, cnt_idx, content, period);
 }
 
+// onem2m_client.on('notification', function (source_uri, cinObj) { //modify event_cnt_name
 
-/* for testing
-app.use(function(request, response, next) {
-    var fullBody = '';
-    request.on('data', function (chunk) {
-        fullBody += chunk.toString();
-    });
-    request.on('end', function () {
-        request.body = fullBody;
+//     console.log(source_uri, cinObj);
 
-        console.log(fullBody);
+//     var path_arr = source_uri.split('/')
+//     var event_cnt_name = path_arr[path_arr.length-2];
+//     var content = cinObj.con;
 
-        response.status(200).send('');
-    });
-});
-*/
+//     /* Received event */
+//     if(event_cnt_name === ' ') { 
+//         // send to tas
+//         if (socket_arr[path_arr[path_arr.length-2]] != null) {
+//             socket_arr[path_arr[path_arr.length-2]].write(JSON.stringify(content) + '<EOF>');
+//         }
+//     }
+    
+// }); 
 
+//---------------------------------------------------------------------------------------//
