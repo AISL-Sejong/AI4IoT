@@ -1,6 +1,7 @@
 import paho.mqtt.client as mqtt
 from json import loads, dumps
 import os
+import time
 import multiprocess
 import DB
 import post
@@ -54,15 +55,18 @@ def on_message(client, userdata, msg): # 서버에게서 PUBLISH 메시지를 �
 
                             print(pid)
 
-                            os.kill(int(pid), 2) #pid kill
-
                             DB.delete(pid) #DB 내에서 pid를 통해 관련 메타데이터 삭제
+                            time.sleep(2)
 
-                            if len(metaData) == 0:
+                            remainData = DB.discovery()
+
+                            if len(remainData) == 0:
                                 post.posting_status("None")
                             
                             else:
-                                post.posting_status(metaData)
+                                post.posting_status(remainData)
+                            
+                            os.kill(int(pid), 2) #pid kill
                             
                         else:
                             pass
