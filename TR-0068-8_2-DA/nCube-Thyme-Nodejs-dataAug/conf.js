@@ -24,7 +24,7 @@ var acp = {};
 conf.useprotocol = 'mqtt'; // select one for 'http' or 'mqtt' or 'coap' or 'ws'
 
 conf.sim = 'disable'; // enable / disable
-
+/*
 // build cse
 cse.host        = '203.253.128.161';
 cse.port        = '7579';
@@ -32,7 +32,6 @@ cse.name        = 'Mobius';
 cse.id          = '/Mobius2';
 cse.mqttport    = '1883';
 cse.wsport      = '7577';
-
 
 // build ae
 ae.name         = 'augmentor';
@@ -42,8 +41,8 @@ ae.appid        = 'augmentor';
 ae.port         = '9727';
 ae.bodytype     = 'json'; // select 'json' or 'xml' or 'cbor'
 ae.tasport      = '20521';
+*/
 
-/*
 // build cse
 cse.host        = '203.250.148.120';
 cse.port        = '20519';
@@ -60,7 +59,6 @@ ae.appid        = 'augmentor';
 ae.port         = '9727';
 ae.bodytype     = 'json'; // select 'json' or 'xml' or 'cbor'
 ae.tasport      = '20521';
-*/
 
 // build cnt
 var count = 0;

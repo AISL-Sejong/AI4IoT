@@ -2123,7 +2123,7 @@ function mqtt_connect(serverip, port, noti_topic) {
         if (onem2m_options.usesecure === 'disable') {
             var connectOptions = {
                 host: serverip,
-                port: port,
+                port: '20516',
 //              username: 'keti',
 //              password: 'keti123',
                 protocol: "mqtt",
