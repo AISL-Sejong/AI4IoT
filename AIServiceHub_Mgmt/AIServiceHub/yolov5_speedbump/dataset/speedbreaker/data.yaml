@@ -1,0 +1,13 @@
+train: {address}/AI4IoT/AIServiceHub_Mgmt/AIServiceHub/dataset/speedbreaker/train/images
+val: {address}/AI4IoT/AIServiceHub_Mgmt/AIServiceHub/dataset/speedbreaker/valid/images
+test: {address}/AI4IoT/AIServiceHub_Mgmt/AIServiceHub/dataset/speedbreaker/test/images
+
+nc: 1
+names: ['SpeedBreaker']
+
+roboflow:
+  workspace: cse400
+  project: speedbreaker_final
+  version: 4
+  license: CC BY 4.0
+  url: https://universe.roboflow.com/cse400/speedbreaker_final/dataset/4
