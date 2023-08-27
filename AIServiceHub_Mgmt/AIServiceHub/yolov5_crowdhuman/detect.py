@@ -165,7 +165,7 @@ def detection(save_img=False):
         # print(f"Results saved to {save_dir}{s}")
         if len(list(save_dir.glob('labels/*.txt'))) == 0:
             count = 0
-            # print (count)
+            print (str(count) + " persons, " + str(count) + " heads,")
 
     print(f'Done. ({time.time() - t0:.3f}s)')
 
@@ -173,7 +173,7 @@ def detection(save_img=False):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument('--weights', nargs='+', type=str, default='/{filepath}/AIServiceHub_Mgmt/AIServiceHub/yolov5_crowdhuman/crowdhuman_yolov5m.pt', help='model.pt path(s)')
+    parser.add_argument('--weights', nargs='+', type=str, default='{address}/AI4IoT/AIServiceHub_Mgmt/AIServiceHub/yolov5_crowdhuman/crowdhuman_yolov5m.pt', help='model.pt path(s)')
     parser.add_argument('--source', type=str, default='', help='source')  # file/folder, 0 for webcam
     parser.add_argument('--img-size', type=int, default=640, help='inference size (pixels)')
     parser.add_argument('--conf-thres', type=float, default=0.25, help='object confidence threshold')
@@ -186,7 +186,7 @@ if __name__ == "__main__":
     parser.add_argument('--agnostic-nms', action='store_true', help='class-agnostic NMS')
     parser.add_argument('--augment', action='store_true', help='augmented inference')
     parser.add_argument('--update', action='store_true', help='update all models')
-    parser.add_argument('--project', default='/{filepath}/AIServiceHub_Mgmt/AIServiceHub/yolov5_crowdhuman/runs/detect', help='save results to project/name')
+    parser.add_argument('--project', default='{address}/AI4IoT/AIServiceHub_Mgmt/AIServiceHub/yolov5_crowdhuman/runs/detect', help='save results to project/name')
     parser.add_argument('--name', default='exp', help='save results to project/name')
     parser.add_argument('--exist-ok', action='store_true', help='existing project/name ok, do not increment')
     parser.add_argument('--person', action='store_true', help='displays only person')

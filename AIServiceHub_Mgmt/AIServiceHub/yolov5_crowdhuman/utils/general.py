@@ -84,7 +84,7 @@ def check_git_status():
         print(e)
 
 
-def check_requirements(file='/{filepath}/AIServiceHub_Mgmt/AIServiceHub/yolov5_crowdhuman/requirements.txt', exclude=()):
+def check_requirements(file='{address}/AI4IoT/AIServiceHub_Mgmt/AIServiceHub/yolov5_crowdhuman/requirements.txt', exclude=()):
     # Check installed dependencies meet requirements
     import pkg_resources
     requirements = [f'{x.name}{x.specifier}' for x in pkg_resources.parse_requirements(Path(file).open())

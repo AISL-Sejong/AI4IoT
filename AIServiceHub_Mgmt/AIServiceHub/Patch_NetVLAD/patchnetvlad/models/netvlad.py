@@ -128,7 +128,7 @@ class NetVLAD(nn.Module):
 
         # calculate residuals to each clusters
         vlad = torch.zeros([N, self.num_clusters, C], dtype=x.dtype, layout=x.layout, device=x.device)
-        f=open("/{filepath}/AIServiceHub_Mgmt/AIServiceHub/Patch_NetVLAD/log.txt",'a')
+        f=open("{address}/AI4IoT/AIServiceHub_Mgmt/AIServiceHub/Patch_NetVLAD/log.txt",'a')
         itera = str(int(self.cnt))
         f.write("\n\n\n\n"+str(itera)+"'s image\n")
         #print("\n\n새로운 이미지\n\n")

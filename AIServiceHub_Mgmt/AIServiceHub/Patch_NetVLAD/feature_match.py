@@ -171,26 +171,30 @@ def feature_match(eval_set, device, opt, config):
         #print('No ground truth was provided; not calculating recalls.')
 
 
-def matching():
+def matching(opt):
+    
+    print(opt)
 
+    img_path = opt.split('/')[-1].replace(".jpg","")
 
     parser = argparse.ArgumentParser(description='Patch-NetVLAD-Feature-Match')
     parser.add_argument('--config_path', type=str, default=join(PATCHNETVLAD_ROOT_DIR, 'configs/performance.ini'),
                         help='File name (with extension) to an ini file that stores most of the configuration data for patch-netvlad')
-    parser.add_argument('--dataset_root_dir', type=str, default='/{filepath}/AIServiceHub_Mgmt/AIServiceHub/Patch_NetVLAD/patchnetvlad/mobius/union',
+    parser.add_argument('--dataset_root_dir', type=str, default='{address}/AI4IoT/AIServiceHub_Mgmt/AIServiceHub/Patch_NetVLAD/patchnetvlad/mobius/union',
                         help='If the files in query_file_path and index_file_path are relative, use dataset_root_dir as prefix.')
-    parser.add_argument('--query_file_path', type=str, default='mobius_query.txt',
+    parser.add_argument('--query_file_path', type=str, default=img_path+'.txt',
                         help='Path (with extension) to a text file that stores the save location and name of all query images in the dataset')
     parser.add_argument('--index_file_path', type=str, default='mobius_db.txt',
                         help='Path (with extension) to a text file that stores the save location and name of all database images in the dataset')
-    parser.add_argument('--query_input_features_dir', type=str, default='/{filepath}/AIServiceHub_Mgmt/AIServiceHub/Patch_NetVLAD/patchnetvlad/output_features/mobius_query',
+    parser.add_argument('--query_input_features_dir', type=str, default='{address}/AI4IoT/AIServiceHub_Mgmt/AIServiceHub/Patch_NetVLAD/patchnetvlad/output_features/mobius_query',
                         help='Path to load all query patch-netvlad features')
-    parser.add_argument('--index_input_features_dir', type=str, default='/{filepath}/AIServiceHub_Mgmt/AIServiceHub/Patch_NetVLAD/patchnetvlad/output_features/mobius_db',
+    parser.add_argument('--index_input_features_dir', type=str, default='{address}/AI4IoT/AIServiceHub_Mgmt/AIServiceHub/Patch_NetVLAD/patchnetvlad/output_features/mobius_db',
                         help='Path to load all database patch-netvlad features')
     parser.add_argument('--ground_truth_path', type=str, default=None,
                         help='Path (with extension) to a file that stores the ground-truth data')
-    parser.add_argument('--result_save_folder', type=str, default='/{filepath}/AIServiceHub_Mgmt/AIServiceHub/Patch_NetVLAD/patchnetvlad/output_features/mobius_db')
+    parser.add_argument('--result_save_folder', type=str, default='{address}/AI4IoT/AIServiceHub_Mgmt/AIServiceHub/Patch_NetVLAD/patchnetvlad/output_features/mobius_db')
     parser.add_argument('--nocuda', action='store_true', help='If true, use CPU only. Else use GPU.')
+    parser.add_argument('--source', type=str, default= '{address}/AI4IoT/AIServiceHub_Mgmt/AIServiceHub/Patch_NetVLAD/patchnetvlad/mobius/union/PID2387754Image.jpg', help='query image path')
     
 
     opt = parser.parse_args()
@@ -225,7 +229,7 @@ if __name__ == "__main__":
 
 # python feature_match.py \
 # --config_path patchnetvlad/configs/performance.ini \
-# --dataset_root_dir=/{filepath}/AIServiceHub_Mgmt/AIServiceHub/Patch_NetVLAD/patchnetvlad/mobius/union \
+# --dataset_root_dir={address}/AI4IoT/AIServiceHub_Mgmt/AIServiceHub/Patch_NetVLAD/patchnetvlad/mobius/union \
 # --query_file_path=mobius_query.txt \
 # --index_file_path=mobius_db.txt \
 # --query_input_features_dir patchnetvlad/output_features/mobius_query \

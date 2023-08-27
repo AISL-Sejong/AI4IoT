@@ -2,7 +2,7 @@ from kafka import KafkaConsumer, KafkaProducer
 from json import loads, dumps
 
 
-def Producer(topic_name, data, ip = '203.250.148.120', port = '20517'): #모듈 기능 확인해서 사용하기
+def Producer(topic_name, data, ip = '{ip}', port = '20517'): #모듈 기능 확인해서 사용하기
     producer = KafkaProducer(
         acks=0, 
         compression_type='gzip', 
@@ -14,7 +14,7 @@ def Producer(topic_name, data, ip = '203.250.148.120', port = '20517'): #모듈 
     producer.flush()
 
 
-def Consumer(topic_name, ip = '203.250.148.120', port = '20517'): #모듈 기능 확인해서 사용하기
+def Consumer(topic_name, ip = '{ip}', port = '20517'): #모듈 기능 확인해서 사용하기
     consumer = KafkaConsumer(
         topic_name,
         bootstrap_servers=[ip + ':' + port],

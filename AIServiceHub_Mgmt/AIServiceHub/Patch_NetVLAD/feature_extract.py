@@ -51,7 +51,9 @@ from patchnetvlad.tools.datasets import PlaceDataset
 from patchnetvlad.models.models_generic import get_backend, get_model, get_pca_encoding
 from patchnetvlad.tools import PATCHNETVLAD_ROOT_DIR
 
-
+import os
+os.environ['CUDA_LAUNCH_BLOCKING'] = "2"
+os.environ["CUDA_VISIBLE_DEVICES"] = "3"
 
 def feature_extract(eval_set, model, device, opt, config):
     if not exists(opt.output_features_dir):
@@ -112,18 +114,23 @@ def feature_extract(eval_set, model, device, opt, config):
 
     np.save(output_global_features_filename, db_feat)
 
-def extracting():
+def extracting(opt):
+    
+    print(opt)
+
+    img_path = opt.split('/')[-1].replace(".jpg","")
 
     parser = argparse.ArgumentParser(description='Patch-NetVLAD-Feature-Extract')
     parser.add_argument('--config_path', type=str, default=join(PATCHNETVLAD_ROOT_DIR, 'configs/performance.ini'),
                         help='File name (with extension) to an ini file that stores most of the configuration data for patch-netvlad')
-    parser.add_argument('--dataset_file_path', type=str,  default='mobius_query.txt',
+    parser.add_argument('--dataset_file_path', type=str,  default=img_path+'.txt',
                         help='Full path (with extension) to a text file that stores the save location and name of all images in the dataset folder')
-    parser.add_argument('--dataset_root_dir', type=str, default='/{filepath}/AIServiceHub_Mgmt/AIServiceHub/Patch_NetVLAD/patchnetvlad/mobius/union',
+    parser.add_argument('--dataset_root_dir', type=str, default='{address}/AI4IoT/AIServiceHub_Mgmt/AIServiceHub/Patch_NetVLAD/patchnetvlad/mobius/union',
                         help='If the files in dataset_file_path are relative, use dataset_root_dir as prefix.')
     parser.add_argument('--output_features_dir', type=str, default=join(PATCHNETVLAD_ROOT_DIR, 'output_features/mobius_query'),
                         help='Path to store all patch-netvlad features')
     parser.add_argument('--nocuda', action='store_true', help='If true, use CPU only. Else use GPU.')
+    parser.add_argument('--source', type=str, default= '{address}/AI4IoT/AIServiceHub_Mgmt/AIServiceHub/Patch_NetVLAD/patchnetvlad/mobius/union/PID2387754Image.jpg', help='query image path')
 
 
     opt = parser.parse_args()
@@ -206,12 +213,12 @@ if __name__ == "__main__":
 # python feature_extract.py \
 # --config_path patchnetvlad/configs/performance.ini \
 # --dataset_file_path=mobius_db.txt \
-# --dataset_root_dir=/{filepath}/AIServiceHub_Mgmt/AIServiceHub/Patch_NetVLAD/patchnetvlad/mobius/union \
+# --dataset_root_dir={address}/AI4IoT/AIServiceHub_Mgmt/AIServiceHub/Patch_NetVLAD/patchnetvlad/mobius/union \
 # --output_features_dir patchnetvlad/output_features/mobius_db
 
 # mobius QUERY
 # python feature_extract.py \
 # --config_path patchnetvlad/configs/performance.ini \
 # --dataset_file_path=mobius_query.txt \
-# --dataset_root_dir=/{filepath}/AIServiceHub_Mgmt/AIServiceHub/Patch_NetVLAD/patchnetvlad/mobius/union \
+# --dataset_root_dir={address}/AI4IoT/AIServiceHub_Mgmt/AIServiceHub/Patch_NetVLAD/patchnetvlad/mobius/union \
 # --output_features_dir patchnetvlad/output_features/mobius_query
