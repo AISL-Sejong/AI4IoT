@@ -5,6 +5,7 @@ import time
 import multiprocess
 import DB
 import post
+import publish_basic
 
 
 def on_connect(client, userdata, flags, rc): # 클라이언트가 서버에게서 CONNACK 응답을 받을 때 호출되는 콜백
@@ -38,7 +39,11 @@ def on_message(client, userdata, msg): # 서버에게서 PUBLISH 메시지를 �
                 for i in range(len(info)):
                     IoTDevicePath = info[i]["IoTDevicePath"]
                     AImodelName = info[i]["AImodelName"]
+                    # 컨테이너 자동 생성
+                    AEname = IoTDevicePath.split('/')[2]
+                    publish_basic.publishing(AEname, '/Mobius/AIServiceEnabler/'+AImodelName)
                     multiprocess.mprocess(IoTDevicePath,AImodelName)
+                    time.sleep(3)
 
             elif req_ID == 1: #AIaaS 요청 해제
                 for i in range(len(info)):
@@ -66,7 +71,10 @@ def on_message(client, userdata, msg): # 서버에게서 PUBLISH 메시지를 �
                             else:
                                 post.posting_status(remainData)
                             
-                            os.kill(int(pid), 2) #pid kill
+                            try:
+                                os.kill(int(pid), 2) #pid kill
+                            except:
+                                pass
                             
                         else:
                             pass
@@ -76,7 +84,7 @@ def on_message(client, userdata, msg): # 서버에게서 PUBLISH 메시지를 �
             pass
         
 
-def subscribing(source = 'AIServiceHub_target' , ip = '{ip}' , port = '{port}'):
+def subscribing(source = 'AIServiceEnabler_target' , ip = '{ip}' , port = {port}):
     # 새로운 클라이언트 생성
     client = mqtt.Client()
     # 콜백 함수 설정 on_connect(브로커에 접속), on_disconnect(브로커에 접속중료), on_subscribe(topic 구독),

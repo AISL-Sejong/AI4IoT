@@ -7,7 +7,7 @@ pid = os.getpid()
 def consuming(IoTDevicePath, AImodelName):
     print("connecting . . .")
     while True:
-        data = kafkaModule.Consumer("AIServiceHub_responseData")
+        data = kafkaModule.Consumer("AIServiceEnabler_responseData")
         print(data)
         if (data["IoTDevicePath"] == IoTDevicePath) & (data["AIModelName"] == AImodelName):
             reportData = data["reportData"]

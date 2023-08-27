@@ -31,18 +31,19 @@ def on_message(client, userdata, msg): # 서버에게서 PUBLISH 메시지를 �
 
         if key == "m2m:cin":
             con_msg = cin_msg["m2m:cin"]["con"]
-            data = {"IoTDevicePath":IoTDevicepath, "IoTDeviceData":con_msg, "AIModelName":AImodelname}
-            kafkaModule.Producer("AIServiceHub_requestData", data)
+            data = {"IoTDevicePath":IoTDevicepath, "IoTDeviceData":con_msg, "AIModelName":AImodelname, "Pid":Pid}
+            kafkaModule.Producer("AIServiceEnabler_requestData", data)
             print("Upload Data from "+IoTDevicepath)
 
         else:
             pass
         
 
-def subscribing(IoTDevicePath, AImodelName , ip = '{ip}' , port = '{port}'):  
+def subscribing(IoTDevicePath, AImodelName , ip = '{ip}' , port = {port}):  
+        
     #subprocess metadata를 DB에 저장
-    Pid = os.getpid()
-    DB.insert(IoTDevicePath, AImodelName, Pid)
+    P_id = os.getpid()
+    DB.insert(IoTDevicePath, AImodelName, P_id)
     time.sleep(2)
     metaData = DB.discovery()
     post.posting_status(metaData)
@@ -60,10 +61,10 @@ def subscribing(IoTDevicePath, AImodelName , ip = '{ip}' , port = '{port}'):
 
     # IoTDevicePath -> Sub 토픽 알아내기
     AEname = IoTDevicePath.split('/')[2] #[1] = Mobius, [2] = AE_name
-    Cntname = IoTDevicePath.split('/')[-1] #[-1] = cnt_name
-    topic = AEname + '_' + Cntname
+    Cntname = IoTDevicePath.split('/')[-1] #[-1] = cnt_name 
+    topic = AEname + '_' + Cntname #cntname을 마지막까지 길게 다 더해야할지도..?
     print(topic)
-
+    
     #IoTDevicePath를 on_message에 넘겨주기 위해서, 전역변수 처리
     global IoTDevicepath
     IoTDevicepath = IoTDevicePath
@@ -71,7 +72,11 @@ def subscribing(IoTDevicePath, AImodelName , ip = '{ip}' , port = '{port}'):
     #AImodelname을 on_message에 넘겨주기 위해서, 전역변수 처리
     global AImodelname
     AImodelname = AImodelName
-
+    
+    #Pid를 on_message에 넘겨주기 위해서, 전역변수 처리
+    global Pid
+    Pid = P_id
+    
     client.subscribe('/oneM2M/req/+/'+topic+'/#')
     client.loop_forever() # 네트웍 트래픽을 처리, 콜백 디스패치, 재접속 등을 수행하는 블러킹 함수
                         # 멀티스레드 인터페이스나 수동 인터페이스를 위한 다른 loop*() 함수도 있음

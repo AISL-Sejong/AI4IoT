@@ -2,7 +2,8 @@ import requests
 import json
 
 def posting_report(AImodelName, data):
-    url = "http://{MobiusIP:MobiusPort}/Mobius/AIServiceHub/"+AImodelName+"/report"
+    AEname = data["IoTDevicePath"].split('/')[2] # AE name만 추출
+    url = "http://{ip}:{port}/Mobius/AIServiceEnabler/"+ AImodelName + "/" + AEname +"/report"
     print(url)
     payload = {}
     payload["m2m:cin"] = {}
@@ -21,7 +22,7 @@ def posting_report(AImodelName, data):
     print("Send Report Data to Mobius")
 
 def posting_status(data):
-    url = "http://{MobiusIP:MobiusPort}/Mobius/AIServiceHub/status"
+    url = "http://{ip}:{port}/Mobius/AIServiceEnabler/status"
     print(url)
     payload = {}
     payload["m2m:cin"] = {}
