@@ -26,22 +26,22 @@ conf.useprotocol = 'mqtt'; // select one for 'http' or 'mqtt' or 'coap' or 'ws'
 conf.sim = 'disable'; // enable / disable
 
 // build cse
-cse.host        = '{IP}';
-cse.port        = '{PORT}';
+cse.host        = '{ip}';
+cse.port        = '{port}';
 cse.name        = 'Mobius';
 cse.id          = '/Mobius2';
-cse.mqttport    = '{PORT}';
-cse.wsport      = '{PORT}';
+cse.mqttport    = '{port}';
+cse.wsport      = '7577';
 
 
 // build ae
-ae.name         = 'AIServiceHub';
-ae.id           = ae.name;
+ae.name         = 'AIServiceEnabler';
+ae.id           = 'AIServiceEnabler';
 ae.parent       = '/' + cse.name;
-ae.appid        = 'AIServiceHub';
-ae.port         = '{PORT}';
+ae.appid        = 'AIServiceEnabler';
+ae.port         = '9727';
 ae.bodytype     = 'json'; // select 'json' or 'xml' or 'cbor'
-ae.tasport      = '{PORT}'; //CSE tas hosting port
+ae.tasport      = '{port}'; //CSE tas hosting port
 
 
 // build cnt
@@ -51,6 +51,26 @@ cnt_arr[count] = {};
 cnt_arr[count].parent = '/' + cse.name + '/' + ae.name;
 cnt_arr[count].lbl = 'target';
 cnt_arr[count++].name = 'target';
+
+cnt_arr[count] = {};
+cnt_arr[count].parent = '/' + cse.name + '/' + ae.name;
+cnt_arr[count].lbl = 'status';
+cnt_arr[count++].name = 'status';
+
+cnt_arr[count] = {};
+cnt_arr[count].parent = '/' + cse.name + '/' + ae.name;
+cnt_arr[count].lbl = 'availableAIModel';
+cnt_arr[count++].name = 'availableAIModel';
+
+cnt_arr[count] = {};
+cnt_arr[count].parent = '/' + cse.name + '/' + ae.name;
+cnt_arr[count].lbl = 'beverageCf';
+cnt_arr[count++].name = 'beverageCf';
+
+cnt_arr[count] = {};
+cnt_arr[count].parent = '/' + cse.name + '/' + ae.name;
+cnt_arr[count].lbl = 'humanPoseEstimation';
+cnt_arr[count++].name = 'humanPoseEstimation';
 
 cnt_arr[count] = {};
 cnt_arr[count].parent = '/' + cse.name + '/' + ae.name;
@@ -64,43 +84,13 @@ cnt_arr[count++].name = 'humanDetection';
 
 cnt_arr[count] = {};
 cnt_arr[count].parent = '/' + cse.name + '/' + ae.name;
-cnt_arr[count].lbl = 'humanPoseEstimation';
-cnt_arr[count++].name = 'humanPoseEstimation';
+cnt_arr[count].lbl = 'potholeDetection';
+cnt_arr[count++].name = 'potholeDetection';
 
 cnt_arr[count] = {};
 cnt_arr[count].parent = '/' + cse.name + '/' + ae.name;
-cnt_arr[count].lbl = 'beverageCf';
-cnt_arr[count++].name = 'beverageCf';
-
-cnt_arr[count] = {};
-cnt_arr[count].parent = '/' + cse.name + '/' + ae.name + '/' + cnt_arr[1].name;
-cnt_arr[count].lbl = 'report';
-cnt_arr[count++].name = 'report';
-
-cnt_arr[count] = {};
-cnt_arr[count].parent = '/' + cse.name + '/' + ae.name + '/' + cnt_arr[2].name;
-cnt_arr[count].lbl = 'report';
-cnt_arr[count++].name = 'report';
-
-cnt_arr[count] = {};
-cnt_arr[count].parent = '/' + cse.name + '/' + ae.name + '/' + cnt_arr[3].name;
-cnt_arr[count].lbl = 'report';
-cnt_arr[count++].name = 'report';
-
-cnt_arr[count] = {};
-cnt_arr[count].parent = '/' + cse.name + '/' + ae.name + '/' + cnt_arr[4].name;
-cnt_arr[count].lbl = 'report';
-cnt_arr[count++].name = 'report';
-
-cnt_arr[count] = {};
-cnt_arr[count].parent = '/' + cse.name + '/' + ae.name;
-cnt_arr[count].lbl = 'status';
-cnt_arr[count++].name = 'status';
-
-cnt_arr[count] = {};
-cnt_arr[count].parent = '/' + cse.name + '/' + ae.name;
-cnt_arr[count].lbl = 'availableAIModel';
-cnt_arr[count++].name = 'availableAIModel';
+cnt_arr[count].lbl = 'speedbumpDetection';
+cnt_arr[count++].name = 'speedbumpDetection';
 
 
 
@@ -113,39 +103,12 @@ sub_arr[count].name = 'target';
 sub_arr[count++].nu = 'mqtt://' + cse.host + '/' + ae.name + '_target' + '?ct=' + ae.bodytype; // mqtt
 //sub_arr[count++].nu = 'http://' + ip.address() + ':' + ae.port + '/noti?ct=json'; // http
 
-
 sub_arr[count] = {};
-sub_arr[count].parent = '/' + cse.name + '/' + ae.name + '/' + cnt_arr[1].name + '/' + cnt_arr[5].name;
-sub_arr[count].name = 'report';
-sub_arr[count++].nu = 'mqtt://' + cse.host + '/' + ae.name + '_visualLocalizationReport' + '?ct=' + ae.bodytype; // mqtt
-//sub_arr[count++].nu = 'http://' + ip.address() + ':' + ae.port + '/noti?ct=json'; // http
-
-
-sub_arr[count] = {};
-sub_arr[count].parent = '/' + cse.name + '/' + ae.name + '/' + cnt_arr[2].name + '/' + cnt_arr[6].name;
-sub_arr[count].name = 'report';
-sub_arr[count++].nu = 'mqtt://' + cse.host + '/' + ae.name + '_humanDetectionReport' + '?ct=' + ae.bodytype; // mqtt
-//sub_arr[count++].nu = 'http://' + ip.address() + ':' + ae.port + '/noti?ct=json'; // http
-
-
-sub_arr[count] = {};
-sub_arr[count].parent = '/' + cse.name + '/' + ae.name + '/' + cnt_arr[3].name + '/' + cnt_arr[7].name;
-sub_arr[count].name = 'report';
-sub_arr[count++].nu = 'mqtt://' + cse.host + '/' + ae.name + '_humanPoseEstimationReport' + '?ct=' + ae.bodytype; // mqtt
-//sub_arr[count++].nu = 'http://' + ip.address() + ':' + ae.port + '/noti?ct=json'; // http
-
-
-sub_arr[count] = {};
-sub_arr[count].parent = '/' + cse.name + '/' + ae.name + '/' + cnt_arr[4].name + '/' + cnt_arr[8].name;
-sub_arr[count].name = 'report';
-sub_arr[count++].nu = 'mqtt://' + cse.host + '/' + ae.name + '_beverageCfReport' + '?ct=' + ae.bodytype; // mqtt
-//sub_arr[count++].nu = 'http://' + ip.address() + ':' + ae.port + '/noti?ct=json'; // http
-
-sub_arr[count] = {};
-sub_arr[count].parent = '/' + cse.name + '/' + ae.name + '/' + cnt_arr[9].name ;
+sub_arr[count].parent = '/' + cse.name + '/' + ae.name + '/' + cnt_arr[1].name;
 sub_arr[count].name = 'status';
 sub_arr[count++].nu = 'mqtt://' + cse.host + '/' + ae.name + '_status' + '?ct=' + ae.bodytype; // mqtt
 //sub_arr[count++].nu = 'http://' + ip.address() + ':' + ae.port + '/noti?ct=json'; // http
+
 
 // build acp: not complete
 acp.parent = '/' + cse.name + '/' + ae.name;
@@ -156,7 +119,7 @@ acp.id = ae.id;
 conf.usesecure  = 'disable';
 
 if(conf.usesecure === 'enable') {
-    cse.mqttport = '{PORT}';
+    cse.mqttport = '8883';
 }
 
 conf.cse = cse;

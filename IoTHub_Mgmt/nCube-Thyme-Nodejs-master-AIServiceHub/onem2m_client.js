@@ -67,7 +67,7 @@ var mqtt_init = function() {
 
     var reg_resp_topic = '/oneM2M/reg_resp/' + onem2m_options.aei + '/+/#';
     var resp_topic = '/oneM2M/resp/' + onem2m_options.aei + '/+/#';
-
+    
     if (onem2m_options.usesecure === 'disable') {
         var connectOptions = {
             host: onem2m_options.host,
@@ -2123,7 +2123,7 @@ function mqtt_connect(serverip, port, noti_topic) {
         if (onem2m_options.usesecure === 'disable') {
             var connectOptions = {
                 host: serverip,
-                port: port,
+                port: '{port}',
 //              username: 'keti',
 //              password: 'keti123',
                 protocol: "mqtt",
@@ -2140,7 +2140,7 @@ function mqtt_connect(serverip, port, noti_topic) {
         else {
             connectOptions = {
                 host: serverip,
-                port: port,
+                port: '{port}',
                 protocol: "mqtts",
                 keepalive: 10,
 //              clientId: serverUID,

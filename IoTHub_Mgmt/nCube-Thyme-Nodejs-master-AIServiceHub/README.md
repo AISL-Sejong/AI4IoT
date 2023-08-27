@@ -37,7 +37,7 @@ Node.js® is a JavaScript runtime built on Chrome's V8 JavaScript engine. Node.j
 conf.useprotocol = 'http';              // select one for 'http' or 'mqtt' or 'coap' or 'ws'
  
 // build cse 
-cse.host        = '203.253.128.161';    //CSE host IP
+cse.host        = '{ip}';    //CSE host IP
 cse.port        = '7579';               //CSE http hosting port
 cse.name        = 'Mobius';
 cse.id          = '/Mobius';
